@@ -24,9 +24,13 @@ class TetrisGrid extends MonoBehaviour{
 
   //an array of integers for the block colors (0 is blank)
   private var block_colors:int[] = null;
+  private var blocks_xform:Transform[] = null;
+  private var blocks_count:int = 0;
 
   function Start () {
     SetNumBlocks(num_xblocks, num_yblocks);
+    //SetScreenSize(480,640);
+    //SetScreenPosition(-240, -320);
     SetBlockColor(0,0,2);
     SetBlockColor(1,0,1);
     SetBlockColor(0,1,3);
@@ -60,8 +64,10 @@ class TetrisGrid extends MonoBehaviour{
   //function BlockIsEmpty(x:int, y:int){  //see if the block is empty (0 is blank)}
   
   function ClearBlocks(){ //0=empty
+    blocks_count = 0; //reset block count
     for(var i:int = 0; i<total_blocks; i++){
       block_colors[i] = 0;
+      Destroy(blocks_xform[i].gameObject);
     }
   }
 
@@ -84,6 +90,7 @@ class TetrisGrid extends MonoBehaviour{
     num_yblocks  = ny                    ;
     total_blocks = nx*ny                 ;
     block_colors = new int[total_blocks] ;
+    blocks_xform = new Transform[total_blocks] ;
     calcBlockSize()                      ;
   }
 
@@ -108,23 +115,24 @@ class TetrisGrid extends MonoBehaviour{
       for(var j:int = 0; j < num_yblocks; j++){
         var blockColor = GetBlockColor(i,j);
         if(blockColor!=0){ //block is not empty
-          var block:Transform = RenderBlock(i,j);
-          if(blockColor == 2){
-            block.renderer.material.color = Color.blue;
-          }
-          else if(blockColor == 3){
-            block.renderer.material.color = Color.red;
-          }
+          var block:Transform = RenderBlock(i,j, blockColor);
+          blocks_xform[blocks_count] = block;
+          blocks_count = blocks_count + 1;
         }
       }
     }
   }
 
-  function RenderBlock(x:int, y:int):Transform{ //render a single block
-    //xform block to position 
-    var newBlock = Instantiate(blockXform);
-    newBlock.position = Vector3(x, y, 0.0);
-    return newBlock;
+  function RenderBlock(x:int, y:int, color:int):Transform{ //render a single block
+    var block:Transform = Instantiate(blockXform);
+    block.position = Vector3(x, y, 0.0);
+    if(color == 2){
+      block.renderer.material.color = Color.blue;
+    }
+    else if(color == 3){
+      block.renderer.material.color = Color.red;
+    }
+    return block;
   }
 
   /*UTILITY*/
