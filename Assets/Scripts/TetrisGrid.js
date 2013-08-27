@@ -38,7 +38,15 @@ class TetrisGrid extends MonoBehaviour{
   }
 
   function Update () {
-
+    if(Input.GetKeyUp(KeyCode.U)){
+      ClearBlocks();
+    }
+    if(Input.GetKeyUp(KeyCode.P)){
+      SetBlockColor(0,0,2);
+      SetBlockColor(1,0,1);
+      SetBlockColor(0,1,3);
+      RenderGrid();
+    }
   }
 
   /*BLOCK LOGIC*/
