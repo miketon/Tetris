@@ -26,7 +26,7 @@ class TetrisGrid extends MonoBehaviour{
   private var block_colors:int[] = null;
   private var blocks_xform:Transform[] = null;
   private var blocks_count:int = 0;
-
+  
   function Start () {
     SetNumBlocks(num_xblocks, num_yblocks);
     //SetScreenSize(480,640);
@@ -38,10 +38,10 @@ class TetrisGrid extends MonoBehaviour{
   }
 
   function Update () {
-    if(Input.GetKeyUp(KeyCode.U)){
+    if(Input.GetKeyDown(KeyCode.U)){
       ClearBlocks();
     }
-    if(Input.GetKeyUp(KeyCode.P)){
+    if(Input.GetKeyDown(KeyCode.P)){
       SetBlockColor(0,0,2);
       SetBlockColor(1,0,1);
       SetBlockColor(0,1,3);
@@ -75,7 +75,11 @@ class TetrisGrid extends MonoBehaviour{
     blocks_count = 0; //reset block count
     for(var i:int = 0; i<total_blocks; i++){
       block_colors[i] = 0;
-      Destroy(blocks_xform[i].gameObject);
+      if(blocks_xform[i]){
+        var destroyMe:GameObject = blocks_xform[i].gameObject;
+        blocks_xform[i] = null;
+        Destroy(destroyMe);
+      }
     }
   }
 
