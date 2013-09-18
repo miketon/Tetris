@@ -4,8 +4,8 @@ class TetrisGrid extends MonoBehaviour{
   var blockXform : Transform;
 
   //the number of blocks in the grid
-  var num_xblocks : int = 0 ;
-  var num_yblocks : int = 0 ;
+  var num_xblocks : int = 1 ; //don't set to zero, else divide by zero error
+  var num_yblocks : int = 1 ;
 
   //the total number of blocks
   private var total_blocks : int = 0 ;
