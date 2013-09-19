@@ -1,12 +1,11 @@
 #pragma strict
 
 
-var tGrid     : TetrisGrid         ;
-var tetromino : TetrisPieceControl ;
+private var tGrid     : TetrisGrid         ;
+private var tetromino : TetrisPieceControl ;
 
 function Start () {
 
-  //tGrid     = new TetrisGrid(); //GetComponent(TetrisGrid)         ;
   tGrid     = gameObject.GetComponent(TetrisGrid)         ;
   tetromino = gameObject.GetComponent(TetrisPieceControl) ;
   

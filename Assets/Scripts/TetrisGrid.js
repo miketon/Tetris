@@ -23,18 +23,20 @@ class TetrisGrid extends MonoBehaviour{
   private var block_height : int = 0 ;
 
   //an array of integers for the block colors (0 is blank)
-  private var block_colors:int[] = null;
+  private var block_colors:int[] = new int[1];
   private var blocks_xform:Transform[] = null;
   private var blocks_count:int = 0;
   
-  function Start () {
+  function Start(){
     SetNumBlocks(num_xblocks, num_yblocks);
     //SetScreenSize(480,640);
     //SetScreenPosition(-240, -320);
+    ClearBlocks();
     SetBlockColor(0,0,2);
     SetBlockColor(1,0,1);
     SetBlockColor(0,1,3);
     RenderGrid();
+    print("Iam Starting: " + block_colors[0]);
   }
 
   function Update () {
@@ -48,10 +50,14 @@ class TetrisGrid extends MonoBehaviour{
       RenderGrid();
     }
   }
+  
+  private var blockC:int = 99;
 
   /*BLOCK LOGIC*/
   function GetBlockColor(x:int, y:int):int{   //get the block color at the xy location
     if(CheckGridBounds(x, y)){                //make sure we are in bounds
+      print("boogers: " +blockC);
+      blockC = block_colors[(y*num_xblocks)+x];
       return block_colors[(y*num_xblocks)+x]; //find row, and offset column
     }
     else{
