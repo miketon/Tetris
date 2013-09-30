@@ -1,4 +1,4 @@
-#pragma strict
+//#pragma strict
 
 class TetrisGrid extends MonoBehaviour{
   var blockXform : Transform;
@@ -32,23 +32,8 @@ class TetrisGrid extends MonoBehaviour{
     //SetScreenSize(480,640);
     //SetScreenPosition(-240, -320);
     ClearBlocks();
-    SetBlockColor(0,0,2);
-    SetBlockColor(1,0,1);
-    SetBlockColor(0,1,3);
-    RenderGrid();
-    print("Iam Starting: " + block_colors[0]);
-  }
-
-  function Update () {
-    if(Input.GetKeyDown(KeyCode.U)){
-      ClearBlocks();
-    }
-    if(Input.GetKeyDown(KeyCode.P)){
-      SetBlockColor(0,0,2);
-      SetBlockColor(1,0,1);
-      SetBlockColor(0,1,3);
-      RenderGrid();
-    }
+    RenderGrid() ;
+    print("Starting up TetrisGrid : " + block_colors[0]);
   }
   
   private var blockC:int = 99;
@@ -56,18 +41,18 @@ class TetrisGrid extends MonoBehaviour{
   /*BLOCK LOGIC*/
   function GetBlockColor(x:int, y:int):int{   //get the block color at the xy location
     if(CheckGridBounds(x, y)){                //make sure we are in bounds
-      print("boogers: " +blockC);
-      blockC = block_colors[(y*num_xblocks)+x];
-      return block_colors[(y*num_xblocks)+x]; //find row, and offset column
+      blockC = (y*num_xblocks)+x;
+      print("boogers: " +" blockC: "+blockC + " x "+x + " y "+y +" num blocks "+ num_xblocks);
+      return block_colors[blockC]; //find row, and offset column
     }
     else{
       return 0 ;
     }
   }
 
-  function SetBlockColor(x:int, y:int, color:int):boolean{  //set the block color at the xy location
+  function SetBlockColor(x:int, y:int, color_IN:int):boolean{  //set the block color at the xy location
     if(CheckGridBounds(x, y)){                              //make sure we are in bounds
-      block_colors[(y*num_xblocks)+x] = color ;             //empty == color == 0
+      block_colors[(y*num_xblocks)+x] = color_IN ;             //empty == color == 0
       return true                             ;
     }
     else{
