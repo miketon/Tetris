@@ -10,14 +10,18 @@ class TetrisPieceControl extends MonoBehaviour{
   }
 
   function CreateNewPiece(tGrid:TetrisGrid, x:int, y:int, type:int){  //spawn a new piece on the tGrid
-  
-    if(tGrid.GetBlockColor(x,y)==0){
+    if(CanCreateNewPiece(tGrid,x,y)===true){
       tGrid.SetBlockColor(x,y,type);
       print("Creating new piece");
     }
- 
   }
   function CanCreateNewPiece(tGrid:TetrisGrid, x:int, y:int):boolean{  //see if a piece can be created
+    if(tGrid.GetBlockColor(x,y)==0){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
   function MovePiece(dx:int, dy:int){  //move the current piece in some direction
   }

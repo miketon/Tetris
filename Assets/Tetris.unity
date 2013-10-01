@@ -1598,8 +1598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockXform: {fileID: 859260210}
-  num_xblocks: 5
-  num_yblocks: 5
+  num_xblocks: 10
+  num_yblocks: 10
 --- !u!114 &1893547610
 MonoBehaviour:
   m_ObjectHideFlags: 0
