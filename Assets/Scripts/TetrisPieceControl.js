@@ -16,12 +16,12 @@ class TetrisPieceControl extends MonoBehaviour{
     }
   }
   function CanCreateNewPiece(tGrid:TetrisGrid, x:int, y:int):boolean{  //see if a piece can be created
+    var returnBool : boolean = false;
     if(tGrid.GetBlockColor(x,y)==0){
-      return true;
+      returnBool = true;
     }
-    else{
-      return false;
-    }
+    print("CanCreateNewPiece: " + returnBool);
+    return returnBool;
   }
   function MovePiece(dx:int, dy:int){  //move the current piece in some direction
   }
