@@ -32,6 +32,7 @@ function Update () {
   }
   else if(Input.GetKeyDown(KeyCode.U)){
     tGrid.ClearScreen();
+    //tGrid.DeleteBlock();
   }
   else if(Input.GetKeyDown(KeyCode.P)){
     tetromino.CreateNewPiece(tGrid, 0,0,2);

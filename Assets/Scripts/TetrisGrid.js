@@ -76,15 +76,18 @@ class TetrisGrid extends MonoBehaviour{
     }
     ClearBlocks();
   }
+  
+  function DeleteBlock(){
+    var destroyMe:GameObject = blocks_xform[0].gameObject;
+    Destroy(destroyMe);
+    blocks_xform[0] = null;
+  }
 
   function ClearBlocks(){ //0=empty
     for(var i:int = 0; i<total_blocks; i++){
-      if(blocks_xform[i]===Transform){ //if xform exist destroy it
-        //RemoveBlock(blocks_xform[i]);
-        //var destroyMe:GameObject = blocks_xform[i].gameObject ;
-        //destroyMe = null                                ;
-        blocks_xform[i] = null;
-        //Destroy(blocks_xform[i].gameObject);
+      if(blocks_xform[i]!=null){ //if xform exist destroy it
+        RemoveBlock(i);          //remove block based on index
+
       }
     }
   }
@@ -170,10 +173,10 @@ class TetrisGrid extends MonoBehaviour{
     }
   }
 
-  function RemoveBlock(block_IN:Transform){
-    var destroyMe:GameObject = block_IN.gameObject ;
-    block_IN = null                                ;
-    Destroy(destroyMe)                             ;
+  function RemoveBlock(index_IN:int){
+    var destroyMe:GameObject = blocks_xform[index_IN].gameObject ;
+    Destroy(destroyMe)                                           ;
+    blocks_xform[index_IN] = null                                ;
   }
 
 }
