@@ -18,8 +18,8 @@ function Start () {
 
 function Update () {
 
-  if(Input.GetKeyDown(KeyCode.LeftArrow)){
-    print("Move Left");
+  if(Input.GetKeyDown(KeyCode.RightArrow)){
+    print("Move Right");
     xPos += 1;
     xPos = xPos%10;
     tetromino.CreateNewPiece(tGrid, xPos, yPos, 1);
