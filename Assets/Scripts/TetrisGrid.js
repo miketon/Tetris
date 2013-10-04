@@ -23,9 +23,9 @@ class TetrisGrid extends MonoBehaviour{
   private var block_height : int = 0 ;
 
   //an array of integers for the block colors (0 is blank)
-  private var block_colors:int[] = new int[1];
-  private var blocks_xform:Transform[] = null;
-  private var blocks_count:int = 0;
+  private var block_colors : int[]       = new int[1] ;
+  private var blocks_xform : Transform[] = null       ;
+  private var blocks_count : int         = 0          ;
 
   function Start(){
     SetNumBlocks(num_xblocks, num_yblocks);
@@ -42,21 +42,15 @@ class TetrisGrid extends MonoBehaviour{
   function GetBlockColor(x:int, y:int):int{   //get the block color at the xy location
     var returnBlock :int = 0 ;                //0 == false, returned by default
     if(CheckGridBounds(x, y)){                //make sure we are in bounds
-      returnBlock = block_colors[GetBlockIndex(x,y)] ; //find row, and offset column
+      returnBlock = block_colors[_Pos_To_Index(x,y)] ; //find row, and offset column
     }
     //print("GetBlockColor: " + returnBlock + " blockC: "+blockC + " x "+x + " y "+y +" num blocks "+ num_xblocks);
     return returnBlock;
   }
 
-  function GetBlockIndex(x:int, y:int):int{
-    var returnIndex:int             ;
-    returnIndex = (y*num_xblocks)+x ;
-    return returnIndex              ;
-  }
-
   function SetBlockColor(x:int, y:int, color_IN:int):boolean{  //set the block color at the xy location
     if(CheckGridBounds(x, y)){                              //make sure we are in bounds
-      block_colors[GetBlockIndex(x,y)] = color_IN ;             //empty == color == 0
+      block_colors[_Pos_To_Index(x,y)] = color_IN ;             //empty == color == 0
       if(color_IN==0){ //if 0 remove block
 
       }
@@ -78,9 +72,9 @@ class TetrisGrid extends MonoBehaviour{
   }
   
   function DeleteBlock(){
-    var destroyMe:GameObject = blocks_xform[0].gameObject;
-    Destroy(destroyMe);
-    blocks_xform[0] = null;
+    var destroyMe:GameObject = blocks_xform[0].gameObject ;
+    Destroy(destroyMe)                                    ;
+    blocks_xform[0] = null                                ;
   }
 
   function ClearBlocks(){ //0=empty
@@ -137,20 +131,23 @@ class TetrisGrid extends MonoBehaviour{
       for(var j:int = 0; j < num_yblocks; j++){
         var blockColor = GetBlockColor(i,j);
         if(blockColor>0){ //block is not empty
-          RenderBlock(i,j, blockColor);
+          var blockIndex : int = _Pos_To_Index(i,j);
+          RenderBlock(blockIndex);
         }
       }
     }
   }
 
-  function RenderBlock(x:int, y:int, color:int){ //render a single block
-    var blockIndex : int = GetBlockIndex(x,y);
-    if(blocks_xform[blockIndex]!=Transform){
-      var block:Transform      = Instantiate(blockXform) ;
-      blocks_xform[blockIndex] = block                   ;
-      blocks_count             = blocks_count + 1        ;
-      block.position           = Vector3(x, y, 0.0)      ;
-
+  function RenderBlock(index_IN:int){      //render a single block
+    if(blocks_xform[index_IN]!=Transform){ //if not empty create block
+      var block:Transform      = Instantiate(blockXform)      ;
+      blocks_xform[index_IN]   = block                        ;
+      blocks_count             = blocks_count + 1             ;
+      var bPos:Vector2         = _Index_To_Pos(index_IN)      ;
+      block.position           = Vector3(bPos.x, bPos.y, 0.0) ;
+      
+      var color:int = block_colors[index_IN];
+      
       if(color == 2){
         block.renderer.material.color = Color.blue;
       }
@@ -161,6 +158,19 @@ class TetrisGrid extends MonoBehaviour{
   }
 
   /*UTILITY*/
+  function _Pos_To_Index(x:int, y:int):int{
+    var returnIndex:int             ;
+    returnIndex = (y*num_xblocks)+x ;
+    return returnIndex              ;
+  }
+  
+  function _Index_To_Pos(index_IN:int):Vector2{
+    var x:int = index_IN%num_xblocks                   ;
+    var y:int = Mathf.FloorToInt(index_IN/num_xblocks) ;
+    var returnPos:Vector2 = Vector2(x,y)               ;
+    return returnPos                                   ;
+  }
+  
   function CheckGridBounds(x:int, y:int):boolean{ //make sure we are in bounds
     if(x<0||x>=num_xblocks){ 
       return false;
