@@ -7,17 +7,13 @@ class TetrisPieceControl extends MonoBehaviour{
   private var color: int = 0;
   
   private var tGrid: TetrisGrid;
-  private var xMax: int = 1;
-  private var yMax: int = 1;
-
+  
   function Start () {
     kPos = Vector2(0,0);
     
     tGrid = GetComponent(TetrisGrid);
-    xMax = tGrid.num_xblocks;
-    yMax = tGrid.num_yblocks;
     
-    CreateNewPiece(tGrid, Vector2(0,0));
+    MovePiece(Vector2(0,0));
   }
 
   function Update () {
@@ -30,20 +26,29 @@ class TetrisPieceControl extends MonoBehaviour{
   function SetPos(vec2_IN:Vector2){
     cPos = vec2_IN;
   }
-
-  function CreateNewPiece(tGrid:TetrisGrid, kVec:Vector2){  //spawn a new piece on the tGrid
+  
+  function MovePiece(kVec:Vector2){
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
-    if(kPos.x>=0 && kPos.x<xMax && kPos.y>=0 && kPos.y<yMax){ //is target position within grid boundary
-      if(CanCreateNewPiece(kPos)===true){
-        tGrid.SetBlockColor(kPos.x,kPos.y,color);
-        cPos = kPos; //block successfully updated, new block becomes current position
-        print("Creating new piece");
-        tGrid.RenderGrid();
-      }
+    if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
+      PieceAdd(kPos, color);
+      PieceRemove(cPos);
+      tGrid.RenderGrid();
+      cPos = kPos; //block successfully updated, new block becomes current position
     }
   }
   
-  function CanCreateNewPiece(vec2_IN:Vector2):boolean{              //see if a piece can be created
+  function PieceAdd(vec2_IN:Vector2, color_IN:int){
+    if(PieceCheckEmpty(vec2_IN)===true){
+      tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,color_IN);
+      print("Creating new piece");
+    }
+  }
+  
+  function PieceRemove(vec2_IN:Vector2){
+    tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,tGrid.emptyBlock);
+  }
+  
+  function PieceCheckEmpty(vec2_IN:Vector2):boolean{              //see if a piece can be created
     var returnBool : boolean = false;
     if(tGrid.GetBlockColor(vec2_IN.x,vec2_IN.y)==tGrid.emptyBlock){ //is target position empty
       returnBool = true;
@@ -51,8 +56,7 @@ class TetrisPieceControl extends MonoBehaviour{
     print("CanCreateNewPiece: " + returnBool);
     return returnBool;
   }
-  function MovePiece(dx:int, dy:int){  //move the current piece in some direction
-  }
+
   function PieceCanMove(tGrid:TetrisGrid, dx:int, dy:int):boolean{  //see if the piece can move in some direction
   }
   function FlipPiece(tGrid:TetrisGrid){  //flip the current piece
