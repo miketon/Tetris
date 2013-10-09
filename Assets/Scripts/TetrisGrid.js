@@ -1,6 +1,7 @@
 #pragma strict
 
 class TetrisGrid extends MonoBehaviour{
+  static public var emptyBlock : int = -1;
   var blockXform : Transform;
 
   //the number of blocks in the grid
@@ -31,7 +32,7 @@ class TetrisGrid extends MonoBehaviour{
     SetNumBlocks(num_xblocks, num_yblocks);
     //SetScreenSize(480,640);
     //SetScreenPosition(-240, -320);
-    ClearBlocks();
+    ClearScreen();
     RenderGrid() ;
     print("Starting up TetrisGrid : " + block_colors[0]);
   }
@@ -49,9 +50,9 @@ class TetrisGrid extends MonoBehaviour{
   }
 
   function SetBlockColor(x:int, y:int, color_IN:int):boolean{  //set the block color at the xy location
-    if(CheckGridBounds(x, y)){                              //make sure we are in bounds
-      block_colors[_Pos_To_Index(x,y)] = color_IN ;             //empty == color == 0
-      if(color_IN==0){ //if 0 remove block
+    if(CheckGridBounds(x, y)){                                 //make sure we are in bounds
+      block_colors[_Pos_To_Index(x,y)] = color_IN ;            
+      if(color_IN==emptyBlock){ //if empty remove block 
 
       }
       return true                             ;
@@ -66,7 +67,7 @@ class TetrisGrid extends MonoBehaviour{
   function ClearScreen(){
     blocks_count  = 0; //reset block count
     for(var i:int = 0; i<total_blocks; i++){
-      block_colors[i] = 0; //reset each entry to empty
+      block_colors[i] = emptyBlock; //reset each entry to empty
     }
     ClearBlocks();
   }
@@ -81,7 +82,6 @@ class TetrisGrid extends MonoBehaviour{
     for(var i:int = 0; i<total_blocks; i++){
       if(blocks_xform[i]!=null){ //if xform exist destroy it
         RemoveBlock(i);          //remove block based on index
-
       }
     }
   }
@@ -130,7 +130,7 @@ class TetrisGrid extends MonoBehaviour{
     for(var i:int = 0; i < num_xblocks; i++){
       for(var j:int = 0; j < num_yblocks; j++){
         var blockColor = GetBlockColor(i,j);
-        if(blockColor>0){ //block is not empty
+        if(blockColor>emptyBlock){ //block is not empty
           var blockIndex : int = _Pos_To_Index(i,j);
           RenderBlock(blockIndex);
         }
@@ -148,11 +148,17 @@ class TetrisGrid extends MonoBehaviour{
       
       var color:int = block_colors[index_IN];
       
-      if(color == 2){
+      if(color == 0){
+        block.renderer.material.color = Color.white;
+      }
+      else if(color == 1){
         block.renderer.material.color = Color.blue;
       }
-      else if(color == 3){
+      else if(color == 2){
         block.renderer.material.color = Color.red;
+      }
+      else if(color == 3){
+        block.renderer.material.color = Color.green;
       }
     }
   }

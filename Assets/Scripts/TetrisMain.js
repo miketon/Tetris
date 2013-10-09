@@ -20,16 +20,16 @@ function Start () {
 
 function Update () {
   if(Input.GetKeyDown(KeyCode.RightArrow)){
-    tetromino.CreateNewPiece(tGrid, kRt, 1);
+    tetromino.CreateNewPiece(tGrid, kRt);
   }
   else if(Input.GetKeyDown(KeyCode.LeftArrow)){
-    tetromino.CreateNewPiece(tGrid, kLt, 1);
+    tetromino.CreateNewPiece(tGrid, kLt);
   }
   else if(Input.GetKeyDown(KeyCode.UpArrow)){
-    tetromino.CreateNewPiece(tGrid, kUp, 1);
+    tetromino.CreateNewPiece(tGrid, kUp);
   }
   else if(Input.GetKeyDown(KeyCode.DownArrow)){
-    tetromino.CreateNewPiece(tGrid, kDn, 1);
+    tetromino.CreateNewPiece(tGrid, kDn);
   }
 }
 
