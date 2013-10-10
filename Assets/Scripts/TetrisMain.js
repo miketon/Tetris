@@ -32,7 +32,8 @@ function Update () {
     tetromino.MovePiece(kDn);
   }
   else if(Input.GetKeyDown(KeyCode.Space)){
-    tetromino.PieceAdd(Vector2(1,1), 2);
+    kPos = tetromino.GetPos();
+    tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
   }
 }
 

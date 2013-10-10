@@ -27,21 +27,26 @@ class TetrisPieceControl extends MonoBehaviour{
     cPos = vec2_IN;
   }
   
+  function GetPos():Vector2{
+    return cPos;
+  }
+  
   function MovePiece(kVec:Vector2){
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
     if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
-      PieceAdd(kPos, color);
-      PieceRemove(cPos);
-      tGrid.RenderGrid();
-      cPos = kPos; //block successfully updated, new block becomes current position
+      if(PieceCheckEmpty(kPos)===true){
+        PieceAdd(kPos, color);
+        PieceRemove(cPos);
+        PieceAdd(cPos, 2); //fill previous position
+        cPos = kPos; //block successfully updated, new block becomes current position
+      }
     }
   }
   
   function PieceAdd(vec2_IN:Vector2, color_IN:int){
-    if(PieceCheckEmpty(vec2_IN)===true){
-      tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,color_IN);
-      print("Creating new piece");
-    }
+    tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,color_IN);
+    tGrid.RenderGrid();
+    print("Creating new piece");
   }
   
   function PieceRemove(vec2_IN:Vector2){
