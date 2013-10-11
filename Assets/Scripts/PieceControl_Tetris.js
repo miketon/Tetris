@@ -1,26 +1,17 @@
 #pragma strict
 
-class TetrisPieceControl extends MonoBehaviour{
+class PieceControl_Tetris extends MonoBehaviour{
 
-  private var cPos : Vector2 = Vector2(0,0); //cursor/current position
-  private var kPos : Vector2 = Vector2(0,0); //delta/next eligible position
-  private var color: int = 0;
+  protected var cPos : Vector2 = Vector2(0,0); //cursor/current position
+  protected var kPos : Vector2 = Vector2(0,0); //delta/next eligible position
+  protected var color: int = 0;
   
-  private var tGrid: TetrisGrid;
+  protected var tGrid: TetrisGrid;
   
   function Start () {
-    kPos = Vector2(0,0);
-    
+    kPos  = Vector2(0,0);
     tGrid = GetComponent(TetrisGrid);
-    
     MovePiece(Vector2(0,0));
-  }
-
-  function Update () {
-  }
-  
-  function Move(vec2_IN:Vector2){
-    
   }
   
   function SetPos(vec2_IN:Vector2){
@@ -33,12 +24,16 @@ class TetrisPieceControl extends MonoBehaviour{
   
   function MovePiece(kVec:Vector2){
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
+    doMovePiece();
+  }
+  
+  function doMovePiece(){
     if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
       if(PieceCheckEmpty(kPos)===true){
-        PieceAdd(kPos, color);
-        PieceRemove(cPos);
-        PieceAdd(cPos, 2); //fill previous position
-        cPos = kPos; //block successfully updated, new block becomes current position
+        PieceAdd(kPos, color) ;
+        PieceRemove(cPos)     ;
+        PieceAdd(cPos, 2)     ; //fill previous position
+        cPos = kPos           ; //block successfully updated, new block becomes current position
       }
     }
   }
