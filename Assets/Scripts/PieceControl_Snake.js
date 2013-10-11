@@ -14,6 +14,11 @@ class PieceControl_Snake extends PieceControl_Tetris{
   
   function doMovePiece(){
     super.doMovePiece();
+    tailPos[tailMax-1] = pPos;
+    for(var i:int=0; i<tailMax-1; i++ ){
+      tailPos[i] = tailPos[i+1];
+    }
+    PieceRemove(tailPos[0]);
     if(tailPos[tailMax-1].x==-1975){
       print("Less than");
     }

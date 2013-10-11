@@ -4,6 +4,7 @@ class PieceControl_Tetris extends MonoBehaviour{
 
   protected var cPos : Vector2 = Vector2(0,0); //cursor/current position
   protected var kPos : Vector2 = Vector2(0,0); //delta/next eligible position
+  protected var pPos : Vector2 = Vector2(0,0); //previous eligible position
   protected var color: int = 0;
   
   protected var tGrid: TetrisGrid;
@@ -33,6 +34,7 @@ class PieceControl_Tetris extends MonoBehaviour{
         PieceAdd(kPos, color) ;
         PieceRemove(cPos)     ;
         PieceAdd(cPos, 2)     ; //fill previous position
+        pPos = cPos;
         cPos = kPos           ; //block successfully updated, new block becomes current position
       }
     }
