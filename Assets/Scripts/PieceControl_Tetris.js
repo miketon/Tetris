@@ -24,20 +24,20 @@ class PieceControl_Tetris extends MonoBehaviour{
   }
   
   function MovePiece(kVec:Vector2){
+    pPos = cPos;
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
-    doMovePiece();
+    if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
+      if(PieceCheckEmpty(kPos)===true){
+        doMovePiece();
+      }
+    }
   }
   
   function doMovePiece(){
-    if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
-      if(PieceCheckEmpty(kPos)===true){
-        PieceAdd(kPos, color) ;
-        PieceRemove(cPos)     ;
-        PieceAdd(cPos, 2)     ; //fill previous position
-        pPos = cPos;
-        cPos = kPos           ; //block successfully updated, new block becomes current position
-      }
-    }
+    PieceAdd(kPos, color) ;
+    PieceRemove(cPos)     ;
+    PieceAdd(cPos, 2)     ; //fill previous position
+    cPos = kPos           ; //block successfully updated, new block becomes current position
   }
   
   function PieceAdd(vec2_IN:Vector2, color_IN:int){
