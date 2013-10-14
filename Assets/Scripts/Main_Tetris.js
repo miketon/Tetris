@@ -1,19 +1,19 @@
 #pragma strict
 
-class TetrisMain extends MonoBehaviour{
+class Main_Tetris extends MonoBehaviour{
 
-private var tGrid     : TetrisGrid         ;
-private var tetromino : TetrisPieceControl ;
+protected var tGrid     : TetrisGrid          ;
+protected var tetromino : PieceControl_Tetris ;
 
-private var kPos : Vector2 = Vector2(0, 0); //current pos
-private var kUp  : Vector2 = Vector2(0, 1); //delta pos
-private var kDn  : Vector2 = Vector2(0,-1);
-private var kRt  : Vector2 = Vector2(1, 0);
-private var kLt  : Vector2 = Vector2(-1,0);
+protected var kPos : Vector2 = Vector2(0, 0); //current pos
+protected var kUp  : Vector2 = Vector2(0, 1); //delta pos
+protected var kDn  : Vector2 = Vector2(0,-1);
+protected var kRt  : Vector2 = Vector2(1, 0);
+protected var kLt  : Vector2 = Vector2(-1,0);
 
 function Start () {
-  tGrid     = GetComponent(TetrisGrid)         ;
-  tetromino = GetComponent(TetrisPieceControl) ;
+  tGrid     = GetComponent(TetrisGrid)          ;
+  tetromino = GetComponent(PieceControl_Tetris) ;
   
   kPos = Vector2(0,2);    
 }
@@ -32,7 +32,8 @@ function Update () {
     tetromino.MovePiece(kDn);
   }
   else if(Input.GetKeyDown(KeyCode.Space)){
-    tetromino.PieceAdd(Vector2(1,1), 2);
+    kPos = tetromino.GetPos();
+    tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
   }
 }
 
