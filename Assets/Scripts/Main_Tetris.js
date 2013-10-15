@@ -2,7 +2,7 @@
 
 class Main_Tetris extends MonoBehaviour{
 
-protected var tGrid     : TetrisGrid          ;
+protected var tGrid     : Grid_Tetris         ;
 protected var tetromino : PieceControl_Tetris ;
 
 protected var kPos : Vector2 = Vector2(0, 0); //current pos
@@ -12,7 +12,7 @@ protected var kRt  : Vector2 = Vector2(1, 0);
 protected var kLt  : Vector2 = Vector2(-1,0);
 
 function Start () {
-  tGrid     = GetComponent(TetrisGrid)          ;
+  tGrid     = GetComponent(Grid_Tetris)          ;
   tetromino = GetComponent(PieceControl_Tetris) ;
   
   kPos = Vector2(0,2);    
@@ -34,13 +34,14 @@ function Update () {
   else if(Input.GetKeyDown(KeyCode.Space)){
     kPos = tetromino.GetPos();
     tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
+    tGrid.CheckForCompletedRows();
   }
 }
 
 function doUpdate(){
   
   if(Input.GetKeyDown(KeyCode.U)){
-    tGrid.ClearScreen();
+    tGrid.ResetGrid();
     //tGrid.DeleteBlock();
   }
   else if(Input.GetKeyDown(KeyCode.P)){

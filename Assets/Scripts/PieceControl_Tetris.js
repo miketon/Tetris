@@ -7,11 +7,11 @@ class PieceControl_Tetris extends MonoBehaviour{
   protected var pPos : Vector2 = Vector2(0,0); //previous eligible position
   protected var color: int = 0;
   
-  protected var tGrid: TetrisGrid;
+  protected var tGrid: Grid_Tetris;
   
   function Start () {
     kPos  = Vector2(0,0);
-    tGrid = GetComponent(TetrisGrid);
+    tGrid = GetComponent(Grid_Tetris);
     MovePiece(Vector2(0,0));
   }
   
@@ -41,31 +41,29 @@ class PieceControl_Tetris extends MonoBehaviour{
   }
   
   function PieceAdd(vec2_IN:Vector2, color_IN:int){
-    tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,color_IN);
-    tGrid.RenderGrid();
-    print("Creating new piece");
+    tGrid.SetBlockColor(vec2_IN,color_IN);
   }
   
   function PieceRemove(vec2_IN:Vector2){
-    tGrid.SetBlockColor(vec2_IN.x,vec2_IN.y,tGrid.emptyBlock);
+    tGrid.SetBlockColor(vec2_IN, tGrid.emptyBlock);
   }
   
-  function PieceCheckEmpty(vec2_IN:Vector2):boolean{              //see if a piece can be created
+  function PieceCheckEmpty(vec2_IN:Vector2):boolean{    //see if a piece can be created
     var returnBool : boolean = false;
-    if(tGrid.GetBlockColor(vec2_IN.x,vec2_IN.y)==tGrid.emptyBlock){ //is target position empty
+    if(tGrid.GetBlockColor(vec2_IN)==tGrid.emptyBlock){ //is target position empty
       returnBool = true;
     }
     print("CanCreateNewPiece: " + returnBool);
     return returnBool;
   }
 
-  function PieceCanMove(tGrid:TetrisGrid, dx:int, dy:int):boolean{  //see if the piece can move in some direction
+  function PieceCanMove(tGrid:Grid_Tetris, dx:int, dy:int):boolean{  //see if the piece can move in some direction
   }
-  function FlipPiece(tGrid:TetrisGrid){  //flip the current piece
+  function FlipPiece(tGrid:Grid_Tetris){  //flip the current piece
   }
-  function PieceCanFlip(tGrid:TetrisGrid):boolean{  //see if the piece can flip
+  function PieceCanFlip(tGrid:Grid_Tetris):boolean{  //see if the piece can flip
   }
-  function MakePiecePermanent(tGrid:TetrisGrid){  //make the current piece permanent in the tGrid
+  function MakePiecePermanent(tGrid:Grid_Tetris){  //make the current piece permanent in the tGrid
   }
 
 }

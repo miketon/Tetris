@@ -1567,7 +1567,7 @@ GameObject:
   - 92: {fileID: 1893547606}
   - 124: {fileID: 1893547605}
   - 81: {fileID: 1893547604}
-  - 114: {fileID: 1893547609}
+  - 114: {fileID: 1893547614}
   - 114: {fileID: 1893547612}
   - 114: {fileID: 1893547613}
   - 114: {fileID: 1893547610}
@@ -1639,20 +1639,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &1893547609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1893547603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa9fb4b28c8954e13ae894801ff8d630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockXform: {fileID: 400000, guid: 14127d4f9e6524b269f2b96006689b8c, type: 2}
-  num_xblocks: 10
-  num_yblocks: 10
 --- !u!114 &1893547610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,6 +1683,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe13da0fbc804bbd8444cfb230fe893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1893547614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893547603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a412dd4737414f38b2c5fe19d115a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockXform: {fileID: 400000, guid: 14127d4f9e6524b269f2b96006689b8c, type: 2}
+  num_xblocks: 5
+  num_yblocks: 5
 --- !u!1 &1925280071
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 #pragma strict
 
-class TetrisGrid extends MonoBehaviour{
+class Grid extends MonoBehaviour{
   static public var emptyBlock : int = -1;
   var blockXform : Transform;
 
   //the number of blocks in the grid
   var num_xblocks : int = 1 ; //don't set to zero, else divide by zero error
   var num_yblocks : int = 1 ;
+
+  private var gridUpdateB : boolean = true;  //update grid?
 
   //the total number of blocks
   private var total_blocks : int = 0 ;
@@ -32,30 +34,32 @@ class TetrisGrid extends MonoBehaviour{
     SetNumBlocks(num_xblocks, num_yblocks);
     //SetScreenSize(480,640);
     //SetScreenPosition(-240, -320);
-    ClearScreen();
+    ResetGrid()  ;  //empty all blocks, reset grid
     RenderGrid() ;
     print("Starting up TetrisGrid : " + block_colors[0]);
   }
 
-  private var blockC:int = 99;
+  function Update(){
+    RenderGrid();
+  }
 
   /*BLOCK LOGIC*/
-  function GetBlockColor(x:int, y:int):int{   //get the block color at the xy location
+  function GetBlockColor(vec2_IN:Vector2):int{   //get the block color at the xy location
     var returnBlock :int = 0 ;                //0 == false, returned by default
-    if(CheckGridBounds(x, y)){                //make sure we are in bounds
-      returnBlock = block_colors[_Pos_To_Index(x,y)] ; //find row, and offset column
+    if(CheckGridBounds(vec2_IN.x, vec2_IN.y)){                //make sure we are in bounds
+      returnBlock = block_colors[_Pos_To_Index(vec2_IN.x,vec2_IN.y)] ; //find row, and offset column
     }
-    //print("GetBlockColor: " + returnBlock + " blockC: "+blockC + " x "+x + " y "+y +" num blocks "+ num_xblocks);
     return returnBlock;
   }
 
-  function SetBlockColor(x:int, y:int, color_IN:int):boolean{  //set the block color at the xy location
-    if(CheckGridBounds(x, y)){                                 //make sure we are in bounds
-      block_colors[_Pos_To_Index(x,y)] = color_IN ;            
+  function SetBlockColor(vec2_IN:Vector2, color_IN:int):boolean{  //set the block color at the xy location
+    if(CheckGridBounds(vec2_IN.x, vec2_IN.y)){                                 //make sure we are in bounds
+      block_colors[_Pos_To_Index(vec2_IN.x,vec2_IN.y)] = color_IN ;            
       if(color_IN==emptyBlock){ //if empty remove block 
 
       }
-      return true                             ;
+      gridUpdateB = true ;
+      return true        ;
     }
     else{
       return false;
@@ -64,14 +68,14 @@ class TetrisGrid extends MonoBehaviour{
 
   //function BlockIsEmpty(x:int, y:int){  //see if the block is empty (0 is blank)}
 
-  function ClearScreen(){
+  function ResetGrid(){
     blocks_count  = 0; //reset block count
     for(var i:int = 0; i<total_blocks; i++){
       block_colors[i] = emptyBlock; //reset each entry to empty
     }
     ClearBlocks();
   }
-  
+
   function DeleteBlock(){
     var destroyMe:GameObject = blocks_xform[0].gameObject ;
     Destroy(destroyMe)                                    ;
@@ -125,16 +129,19 @@ class TetrisGrid extends MonoBehaviour{
   function RenderGrid(){ //render a background for the entire grid, and any blocks that are not blank
     //A color value of "0" is considered to be blank, and the actual colors run from 1-7, 
     //this gives us all the colors we need for the classic Tetris pieces.
-    ClearBlocks(); //empty current grid
-    print("Rendering");
-    for(var i:int = 0; i < num_xblocks; i++){
-      for(var j:int = 0; j < num_yblocks; j++){
-        var blockColor = GetBlockColor(i,j);
-        if(blockColor>emptyBlock){ //block is not empty
-          var blockIndex : int = _Pos_To_Index(i,j);
-          RenderBlock(blockIndex);
+    if(gridUpdateB){
+      ClearBlocks(); //empty current grid
+      print("Rendering");
+      for(var i:int = 0; i < num_xblocks; i++){
+        for(var j:int = 0; j < num_yblocks; j++){
+          var blockColor:int = GetBlockColor(Vector2(i,j));
+          if(blockColor>emptyBlock){ //block is not empty
+            var blockIndex : int = _Pos_To_Index(i,j);
+            RenderBlock(blockIndex);
+          }
         }
       }
+      gridUpdateB = false;
     }
   }
 
@@ -145,9 +152,9 @@ class TetrisGrid extends MonoBehaviour{
       blocks_count             = blocks_count + 1             ;
       var bPos:Vector2         = _Index_To_Pos(index_IN)      ;
       block.position           = Vector3(bPos.x, bPos.y, 0.0) ;
-      
+
       var color:int = block_colors[index_IN];
-      
+
       if(color == 0){
         block.renderer.material.color = Color.white;
       }
@@ -169,14 +176,14 @@ class TetrisGrid extends MonoBehaviour{
     returnIndex = (y*num_xblocks)+x ;
     return returnIndex              ;
   }
-  
+
   function _Index_To_Pos(index_IN:int):Vector2{
     var x:int = index_IN%num_xblocks                   ;
     var y:int = Mathf.FloorToInt(index_IN/num_xblocks) ;
     var returnPos:Vector2 = Vector2(x,y)               ;
     return returnPos                                   ;
   }
-  
+
   function CheckGridBounds(x:int, y:int):boolean{ //make sure we are in bounds
     if(x<0||x>=num_xblocks){ 
       return false;
