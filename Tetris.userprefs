@@ -1,10 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../Downloads/UnityTetris2/Assets/TetrisPieceControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PieceControl_Snake.js">
     <Files>
       <File FileName="../Downloads/UnityTetris2/Assets/UnityTetrisMain.cs" Line="8" Column="2" />
       <File FileName="../Downloads/UnityTetris2/Assets/TetrisGrid.cs" Line="1" Column="1" />
       <File FileName="../Downloads/UnityTetris2/Assets/TetrisPieceControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Grid.js" Line="69" Column="61" />
+      <File FileName="Assets/Scripts/Grid_Tetris.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PieceControl_Tetris.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Main_Tetris.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Main_Snake.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PieceControl_Snake.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

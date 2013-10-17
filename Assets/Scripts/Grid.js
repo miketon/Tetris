@@ -65,6 +65,12 @@ class Grid extends MonoBehaviour{
       return false;
     }
   }
+  
+  function DoBlockColor(vec2_IN:Vector2, color_IN:int){ //change block value
+    if(GetBlockColor(vec2_IN) != emptyBlock){
+      SetBlockColor(vec2_IN, color_IN);
+    }
+  }
 
   //function BlockIsEmpty(x:int, y:int){  //see if the block is empty (0 is blank)}
 

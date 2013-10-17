@@ -34,7 +34,18 @@ function Update () {
   else if(Input.GetKeyDown(KeyCode.Space)){
     kPos = tetromino.GetPos();
     tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
-    tGrid.CheckForCompletedRows();
+    tGrid.RowClear(kPos.y);
+  }
+  else if(Input.GetKeyDown(KeyCode.F)){
+    kPos = tetromino.GetPos();
+    tGrid.RowFill(kPos.y,0);
+  }
+  else if(Input.GetKeyDown(KeyCode.C)){
+    kPos = tetromino.GetPos();
+    var rowComplete:boolean = tGrid.isRowComplete(kPos.y);
+    if(rowComplete){
+      tGrid.RowFill(kPos.y,1);
+    }
   }
 }
 
