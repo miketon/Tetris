@@ -22,20 +22,18 @@ class Grid_Tetris extends Grid{
   
   function RowClear(y:int){
     for(var i:int=0; i<num_xblocks; i++){
-      DoBlockColor(Vector2(i,y), 3);
+      ClearBlock(Vector2(i,y));
     }
   }
   
   function RowFill(y:int, emptyGap_IN:int){
     for(var i:int=0; i<num_xblocks-emptyGap_IN; i++){
-      DoBlockColor(Vector2(i,y), 1);
+      SetBlockColor(Vector2(i,y), 1);
     }
   }
   
   function Start(){
     super.Start();
   }
-  
-  
-  
+   
 }

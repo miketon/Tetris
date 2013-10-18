@@ -2,17 +2,18 @@
 
 class PieceControl_Tetris extends MonoBehaviour{
 
+  protected var tGrid: Grid_Tetris;
+
   protected var cPos : Vector2 = Vector2(0,0); //cursor/current position
   protected var kPos : Vector2 = Vector2(0,0); //delta/next eligible position
   protected var pPos : Vector2 = Vector2(0,0); //previous eligible position
-  protected var color: int = 0;
   
-  protected var tGrid: Grid_Tetris;
-  
+  protected var color: int     = 0           ;
+    
   function Start () {
-    kPos  = Vector2(0,0);
+    kPos  = Vector2(0,0)             ;
     tGrid = GetComponent(Grid_Tetris);
-    MovePiece(Vector2(0,0));
+    MovePiece(Vector2(0,0))          ;
   }
   
   function SetPos(vec2_IN:Vector2){
@@ -26,7 +27,7 @@ class PieceControl_Tetris extends MonoBehaviour{
   function MovePiece(kVec:Vector2){
     pPos = cPos;
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
-    if(tGrid.CheckGridBounds(kPos.x, kPos.y)){ //is target position within grid boundary
+    if(tGrid.CheckGridBounds(kPos))   { //is target position within grid boundary
       if(PieceCheckEmpty(kPos)===true){
         doMovePiece();
       }

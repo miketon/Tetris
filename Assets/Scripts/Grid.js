@@ -45,31 +45,23 @@ class Grid extends MonoBehaviour{
 
   /*BLOCK LOGIC*/
   function GetBlockColor(vec2_IN:Vector2):int{   //get the block color at the xy location
-    var returnBlock :int = 0 ;                //0 == false, returned by default
-    if(CheckGridBounds(vec2_IN.x, vec2_IN.y)){                //make sure we are in bounds
-      returnBlock = block_colors[_Pos_To_Index(vec2_IN.x,vec2_IN.y)] ; //find row, and offset column
+    var returnBlock :int = 0 ;                   //0 == false, returned by default
+    if(CheckGridBounds(vec2_IN)){                //make sure we are in bounds
+      returnBlock = block_colors[_Pos_To_Index(vec2_IN)] ; //find row, and offset column
     }
     return returnBlock;
   }
 
-  function SetBlockColor(vec2_IN:Vector2, color_IN:int):boolean{  //set the block color at the xy location
-    if(CheckGridBounds(vec2_IN.x, vec2_IN.y)){                                 //make sure we are in bounds
-      block_colors[_Pos_To_Index(vec2_IN.x,vec2_IN.y)] = color_IN ;            
-      if(color_IN==emptyBlock){ //if empty remove block 
-
-      }
+  function SetBlockColor(vec2_IN:Vector2, color_IN:int){  //set the block color at the xy location
+    if(CheckGridBounds(vec2_IN)){                         //make sure we are in bounds
+      block_colors[_Pos_To_Index(vec2_IN)] = color_IN ;            
       gridUpdateB = true ;
-      return true        ;
-    }
-    else{
-      return false;
     }
   }
   
-  function DoBlockColor(vec2_IN:Vector2, color_IN:int){ //change block value
-    if(GetBlockColor(vec2_IN) != emptyBlock){
-      SetBlockColor(vec2_IN, color_IN);
-    }
+  function ClearBlock(vec2_IN:Vector2){
+    block_colors[_Pos_To_Index(vec2_IN)] = emptyBlock ;            
+    gridUpdateB = true ;
   }
 
   //function BlockIsEmpty(x:int, y:int){  //see if the block is empty (0 is blank)}
@@ -142,7 +134,7 @@ class Grid extends MonoBehaviour{
         for(var j:int = 0; j < num_yblocks; j++){
           var blockColor:int = GetBlockColor(Vector2(i,j));
           if(blockColor>emptyBlock){ //block is not empty
-            var blockIndex : int = _Pos_To_Index(i,j);
+            var blockIndex : int = _Pos_To_Index(Vector2(i,j));
             RenderBlock(blockIndex);
           }
         }
@@ -177,9 +169,10 @@ class Grid extends MonoBehaviour{
   }
 
   /*UTILITY*/
-  function _Pos_To_Index(x:int, y:int):int{
+  
+  function _Pos_To_Index(vec2_IN:Vector2):int{
     var returnIndex:int             ;
-    returnIndex = (y*num_xblocks)+x ;
+    returnIndex = (vec2_IN.y*num_xblocks)+vec2_IN.x ;
     return returnIndex              ;
   }
 
@@ -190,11 +183,11 @@ class Grid extends MonoBehaviour{
     return returnPos                                   ;
   }
 
-  function CheckGridBounds(x:int, y:int):boolean{ //make sure we are in bounds
-    if(x<0||x>=num_xblocks){ 
+  function CheckGridBounds(vec2_IN:Vector2):boolean{ //make sure we are in bounds
+    if(vec2_IN.x<0||vec2_IN.x>=num_xblocks){ 
       return false;
     }
-    else if(y<0||y>=num_yblocks){
+    else if(vec2_IN.y<0||vec2_IN.y>=num_yblocks){
       return false;
     }
     else{
