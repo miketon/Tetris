@@ -129,7 +129,6 @@ class Grid extends MonoBehaviour{
     //this gives us all the colors we need for the classic Tetris pieces.
     if(gridUpdateB){
       ClearBlocks(); //empty current grid
-      print("Rendering");
       for(var i:int = 0; i < num_xblocks; i++){
         for(var j:int = 0; j < num_yblocks; j++){
           var blockColor:int = GetBlockColor(Vector2(i,j));

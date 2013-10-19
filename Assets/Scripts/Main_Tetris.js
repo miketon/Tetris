@@ -32,13 +32,14 @@ function Update () {
     tetromino.MovePiece(kDn);
   }
   else if(Input.GetKeyDown(KeyCode.Space)){
-    kPos = tetromino.GetPos();
-    tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
-    tGrid.RowClear(kPos.y);
+    kPos = tetromino.GetPos() ;
+    tGrid.RowClear(kPos.y)    ;
+    tGrid.DropRow(kPos.y)     ;
+    //tetromino.PieceAdd(Vector2(kPos.x,kPos.y), 3);
   }
   else if(Input.GetKeyDown(KeyCode.F)){
-    kPos = tetromino.GetPos();
-    tGrid.RowFill(kPos.y,0);
+    kPos = tetromino.GetPos() ;
+    tGrid.RowFill(kPos.y,0)   ;
   }
   else if(Input.GetKeyDown(KeyCode.C)){
     kPos = tetromino.GetPos();
@@ -47,25 +48,6 @@ function Update () {
       tGrid.RowFill(kPos.y,1);
     }
   }
-}
-
-function doUpdate(){
-  
-  if(Input.GetKeyDown(KeyCode.U)){
-    tGrid.ResetGrid();
-    //tGrid.DeleteBlock();
-  }
-  else if(Input.GetKeyDown(KeyCode.P)){
-  /*
-    tetromino.CreateNewPiece(tGrid, 0,0,2);
-    tetromino.CreateNewPiece(tGrid, 0,0,2);
-    tetromino.CreateNewPiece(tGrid, 1,0,1);
-    tetromino.CreateNewPiece(tGrid, 0,1,3);
-    tetromino.CreateNewPiece(tGrid, 0,4,3);
-   */
-    tGrid.RenderGrid();
-  }
-
 }
 
 }

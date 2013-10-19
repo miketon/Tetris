@@ -54,7 +54,7 @@ class PieceControl_Tetris extends MonoBehaviour{
     if(tGrid.GetBlockColor(vec2_IN)==tGrid.emptyBlock){ //is target position empty
       returnBool = true;
     }
-    print("CanCreateNewPiece: " + returnBool);
+    //print("CanCreateNewPiece: " + returnBool);
     return returnBool;
   }
 
