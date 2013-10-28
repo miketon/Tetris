@@ -2,6 +2,17 @@
 
 class Grid_Tetris extends Grid{
   
+  public var waitForAnim : int = 0 ;  //0=false, 1=clear row, 2=drop row
+  private var durBlockClear : float = 0.015;
+  
+  function Update(){
+    super.Update();
+    if(Input.GetKeyDown(KeyCode.W)){ //modulate through wait states
+      waitForAnim = waitForAnim+1;
+      waitForAnim = waitForAnim%3;
+    }
+  }
+
   function CheckForCompletedRows(){
     print("Are there row complete?");
     for(var i:int=0; i<num_yblocks; i++){
@@ -25,10 +36,17 @@ class Grid_Tetris extends Grid{
     }
   }
   
+  //function RowClear(y:int, callback:function()){
   function RowClear(y:int){
     for(var i:int=0; i<num_xblocks; i++){
+      yield WaitForSeconds (durBlockClear);
       ClearBlock(Vector2(i,y));
     }
+    printCallBack();
+  }
+  
+  function printCallBack(){
+    print("Call back printing");
   }
   
   function RowDrop(y:int){
@@ -44,7 +62,7 @@ class Grid_Tetris extends Grid{
     for(var i:int=0; i<num_xblocks; i++){
       if(GetBlockColor(Vector2(i,y)) == emptyBlock){
         completeBool = false;
-        print("Found Empty block : Row Not Complete");
+        //print("Found Empty block : Row Not Complete");
       }
     }
     return completeBool;
@@ -57,7 +75,7 @@ class Grid_Tetris extends Grid{
       var aboveColor:int = GetBlockColor(abovePos);
       SetBlockColor(vec2_IN, aboveColor) ;  //set current block to block above's color
       SetBlockColor(abovePos, emptyBlock);  //set block above to empty
-      print("BlockDrop : "+aboveColor+" : "+vec2_IN);
+      //print("BlockDrop : "+aboveColor+" : "+vec2_IN);
     }
   }
    

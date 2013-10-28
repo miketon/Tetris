@@ -2,8 +2,6 @@
 
 class Main_Tetris extends MonoBehaviour{
 
-  private var waitForAnim : int = 0 ;  //0=false, 1=clear row, 2=drop row
-
   protected var tGrid     : Grid_Tetris         ;
   protected var tGrid_y   : int = 1             ;
   protected var tetromino : PieceControl_Tetris ;
@@ -23,17 +21,13 @@ class Main_Tetris extends MonoBehaviour{
   }
 
   function Update () {
-    if(Input.GetKeyDown(KeyCode.W)){ //modulate through wait states
-      waitForAnim = waitForAnim+1;
-      waitForAnim = waitForAnim%3;
-    }
 
-    if(waitForAnim>0){       //does animation need to play; don't take input
-      if(waitForAnim == 1){  //1==clear row
-        print("Animation in process : Clearing Row " + waitForAnim);
+    if(tGrid.waitForAnim>0){       //does animation need to play; don't take input
+      if(tGrid.waitForAnim == 1){  //1==clear row
+        print("Animation in process : Clearing Row " + tGrid.waitForAnim);
       }
       else{                  //1==dropping row
-        print("Animation in process : Dropping Row " + waitForAnim);
+        print("Animation in process : Dropping Row " + tGrid.waitForAnim);
       }
     }
     else{                    //else take input

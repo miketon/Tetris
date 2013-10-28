@@ -1697,6 +1697,7 @@ MonoBehaviour:
   blockXform: {fileID: 400000, guid: 14127d4f9e6524b269f2b96006689b8c, type: 2}
   num_xblocks: 5
   num_yblocks: 5
+  waitForAnim: 0
 --- !u!1 &1925280071
 GameObject:
   m_ObjectHideFlags: 0
