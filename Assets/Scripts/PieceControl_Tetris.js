@@ -11,7 +11,7 @@ class PieceControl_Tetris extends MonoBehaviour{
   protected var pPos : Vector2 = Vector2(0,0); //previous eligible position
   protected var oPos : Vector2 = Vector2(0,0); //previous eligible position
   
-  protected var color  : int     = 0           ;
+  protected var color  : int   = 0           ;
     
   function Start () {
     kPos  = Vector2(0,0)             ;
@@ -23,8 +23,8 @@ class PieceControl_Tetris extends MonoBehaviour{
     if(Input.GetKeyDown(KeyCode.W)){ //modulate through wait states
       inputB = !inputB;
       if(!inputB){
-        doAnimPiece();
-        kZero = 1.0;
+        doAnimPiece() ;
+        kZero = 1.0   ;
       }
     }
     else if(Input.GetKeyDown(KeyCode.Y)){ //modulate through wait states
@@ -32,40 +32,37 @@ class PieceControl_Tetris extends MonoBehaviour{
     }
     
     if(bAnim){
-      kZero = deltaToZero(kZero, 0.1);
-      print("kZero : "+kZero);
-      var index_B   : int       = tGrid._Pos_To_Index(cPos) ;
-      var animBlock : Transform = tGrid.blocks_xform[index_B]  ;
-      animBlock.position.x += kZero;
-
+      kZero = deltaToZero(kZero, 0.15);
+      var index_B   : int       = tGrid._Pos_To_Index(cPos)   ;
+      var animBlock : Transform = tGrid.blocks_xform[index_B] ;
+      animBlock.position.x = offSet.x+1.0-kZero;
+      print("kZero : "+kZero +" block Position "+animBlock.position.x+" offSetX "+offSet.x);
     }    
 
   }
   
-  var kZero : float = 1.0;
-  var bAnim : boolean = false;
+  var kZero : float   = 1.0   ;
+  var bAnim : boolean = false ;
+  var offSet : Vector2 = Vector2(0.0, 0.0);
     
   function doAnimPiece(){
-    var index_B   : int       = tGrid._Pos_To_Index(cPos) ;
-    var animBlock : Transform = tGrid.blocks_xform[index_B]  ;
-    animBlock.position.x += (cPos.x+0.1)%1;
+    var index_B   : int       = tGrid._Pos_To_Index(cPos)   ;
+    var animBlock : Transform = tGrid.blocks_xform[index_B] ;
     bAnim = true;
+    offSet.x = animBlock.position.x;
   }
   
   function deltaToZero(value:float, k:float):float{
-    var zeroB : boolean = false;
-    var threshHoldZero : float = 0.01;
-    var absValue : float = Mathf.Abs(value);
     var retValue : float = value;
     if(value >0.0){
       retValue = value - k;
     }
     else{
-      retValue = 0.0;
-      bAnim = false;
-      kZero = 1.0;
+      retValue = 0.0   ;
+      bAnim    = false ;
+      kZero    = 1.0   ;
     }
-    return retValue                                 ;
+    return retValue ;
   }
   
   function SetPos(vec2_IN:Vector2){
