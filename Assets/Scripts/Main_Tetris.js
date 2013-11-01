@@ -22,13 +22,8 @@ class Main_Tetris extends MonoBehaviour{
 
   function Update () {
 
-    if(tGrid.waitForAnim>0){       //does animation need to play; don't take input
-      if(tGrid.waitForAnim == 1){  //1==clear row
-        print("Animation in process : Clearing Row " + tGrid.waitForAnim);
-      }
-      else{                  //1==dropping row
-        print("Animation in process : Dropping Row " + tGrid.waitForAnim);
-      }
+    if(!tetromino.inputB){       //does animation need to play; don't take input
+      //print("Animation in process : Cursor Locked " + tetromino.inputB);
     }
     else{                    //else take input
       if(Input.GetKeyDown(KeyCode.RightArrow)){

@@ -27,7 +27,7 @@ class Grid extends MonoBehaviour{
 
   //an array of integers for the block colors (0 is blank)
   private var block_colors : int[]       = new int[1] ;
-  private var blocks_xform : Transform[] = null       ;
+  public var blocks_xform : Transform[] = null       ;
   private var blocks_count : int         = 0          ;
 
   function Start(){

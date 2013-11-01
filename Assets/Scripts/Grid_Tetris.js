@@ -2,8 +2,8 @@
 
 class Grid_Tetris extends Grid{
   
-  public var waitForAnim : int = 0 ;  //0=false, 1=clear row, 2=drop row
-  private var durBlockClear : float = 0.015;
+  public  var waitForAnim   : int   = 0     ;  //0=false, 1=clear row, 2=drop row
+  private var durBlockClear : float = 0.015 ;
   
   function Update(){
     super.Update();
@@ -12,18 +12,12 @@ class Grid_Tetris extends Grid{
       waitForAnim = waitForAnim%3;
     }
   }
-
-  function CheckForCompletedRows(){
-    print("Are there row complete?");
-    for(var i:int=0; i<num_yblocks; i++){
-      RowCompleteCheck(i);
-    }
-  }
   
   function doDropRow(y:int){
     var rowAbove:int = y+1;
     if(rowAbove<num_yblocks){ //prevents dropping from the top of playfield
       for(var i:int=0; i<num_xblocks; i++){
+        yield WaitForSeconds (durBlockClear);
         BlockDrop(Vector2(i,y));
       }
       RowDrop(rowAbove);
@@ -77,6 +71,12 @@ class Grid_Tetris extends Grid{
       SetBlockColor(abovePos, emptyBlock);  //set block above to empty
       //print("BlockDrop : "+aboveColor+" : "+vec2_IN);
     }
+  }
+  
+  function BlockDropAnim(vec2_IN:Vector2){
+    var offsetY : float = 1.0;
+    SetBlockColor(vec2_IN, 1) ;  //set current block to block above's color
+    
   }
    
 }

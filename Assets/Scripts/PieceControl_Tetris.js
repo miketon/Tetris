@@ -2,18 +2,70 @@
 
 class PieceControl_Tetris extends MonoBehaviour{
 
+  public    var inputB : boolean = true;
+
   protected var tGrid: Grid_Tetris;
 
   protected var cPos : Vector2 = Vector2(0,0); //cursor/current position
   protected var kPos : Vector2 = Vector2(0,0); //delta/next eligible position
   protected var pPos : Vector2 = Vector2(0,0); //previous eligible position
+  protected var oPos : Vector2 = Vector2(0,0); //previous eligible position
   
-  protected var color: int     = 0           ;
+  protected var color  : int     = 0           ;
     
   function Start () {
     kPos  = Vector2(0,0)             ;
     tGrid = GetComponent(Grid_Tetris);
     MovePiece(Vector2(0,0))          ;
+  }
+  
+  function Update(){
+    if(Input.GetKeyDown(KeyCode.W)){ //modulate through wait states
+      inputB = !inputB;
+      if(!inputB){
+        doAnimPiece();
+        kZero = 1.0;
+      }
+    }
+    else if(Input.GetKeyDown(KeyCode.Y)){ //modulate through wait states
+      doAnimPiece();
+    }
+    
+    if(bAnim){
+      kZero = deltaToZero(kZero, 0.1);
+      print("kZero : "+kZero);
+      var index_B   : int       = tGrid._Pos_To_Index(cPos) ;
+      var animBlock : Transform = tGrid.blocks_xform[index_B]  ;
+      animBlock.position.x += kZero;
+
+    }    
+
+  }
+  
+  var kZero : float = 1.0;
+  var bAnim : boolean = false;
+    
+  function doAnimPiece(){
+    var index_B   : int       = tGrid._Pos_To_Index(cPos) ;
+    var animBlock : Transform = tGrid.blocks_xform[index_B]  ;
+    animBlock.position.x += (cPos.x+0.1)%1;
+    bAnim = true;
+  }
+  
+  function deltaToZero(value:float, k:float):float{
+    var zeroB : boolean = false;
+    var threshHoldZero : float = 0.01;
+    var absValue : float = Mathf.Abs(value);
+    var retValue : float = value;
+    if(value >0.0){
+      retValue = value - k;
+    }
+    else{
+      retValue = 0.0;
+      bAnim = false;
+      kZero = 1.0;
+    }
+    return retValue                                 ;
   }
   
   function SetPos(vec2_IN:Vector2){
@@ -29,6 +81,7 @@ class PieceControl_Tetris extends MonoBehaviour{
     kPos = Vector2(cPos.x+kVec.x, cPos.y+kVec.y);
     if(tGrid.CheckGridBounds(kPos))   { //is target position within grid boundary
       if(PieceCheckEmpty(kPos)===true){
+        oPos = -kVec;
         doMovePiece();
       }
     }
