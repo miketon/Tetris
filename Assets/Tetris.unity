@@ -1662,8 +1662,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputB: 1
+  mBlock: {fileID: 0}
   kZero: 1
   bAnim: 0
+  offSet: {x: 0, y: 0}
 --- !u!114 &1893547612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,8 +1678,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputB: 1
+  mBlock: {fileID: 0}
   kZero: 1
   bAnim: 0
+  offSet: {x: 0, y: 0}
 --- !u!114 &1893547613
 MonoBehaviour:
   m_ObjectHideFlags: 0
